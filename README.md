@@ -96,4 +96,63 @@ git commit
 ```
 6.- Escribir todas los commits en ingles, la mayoria lo hace y se recomienda
 
- 
+
+## Clase 3
+
+### TU CUENTA EN GITHUB
+
+### Como crear tu cuenta?
+
+Ingresar a la pagina oficial de GitHub y crear una cuenta, no se recomienda con correo
+instituacional y debes usar un username facil de recordar
+### Crea tu 1er repositorio
+Apretar la opcion crear nuevo repositorio y darle un nombre.
+Una vez hecho, 
+### Configura tu GitHub para conectar a tu repositorio local
+Debes generar tu llave personal para trabajar con SSH, 
+Ingresa:
+```
+ssh-keygen -t ed25519 -C ¨<correo usado en GitHub>¨
+```
+Copia la llave generada, ve a GIthub, en configuraciones y a Keys.
+Crea una nueva llave, dale un nombre y pega la llave que generaste
+antes en la 3ra seccion.
+Finalmente click en ¨crear llave¨
+
+Vuelve a la terminal e ingresa:
+```
+ssh -T git@github.com 
+```
+Despues ingresar yes, a la pregunta que aparezca. AL final, se te muestra un mensaje
+que la autenticacion fue exitosa.
+
+### Sube tu repositorio local
+
+En GitHub, crea un nuevo repositorio y dale un nombre.
+Luego de crearla ve a a terminal y ejecuta este comando para conectar de forma remota
+y subir tu repositorio local al repositorio creado en GitHub:
+```
+git remote add origin git@github.com:TuUser/TuRepo.git
+git branch -M main git push -u origin main
+```
+### Descarga un repositorio de GitHub 
+
+En caso haya repositorios que quieras decargar en tu PC o estas en otra computadora
+y quieres descargar uno de tus repositorios.
+
+Abre tu terminal e ingresa este comando:
+```
+git clone “git@github.com:TuUser/TuRepo.git”
+```
+O mas facil ir al repositorio en GItHub y copiar el comando ya listo para SSH.
+
+### Cambios a tu repositorio de GitHub 
+
+Si quieres subir cambios nuevos que hiciste localmente, se usa:
+```
+git push origin <rama>
+```
+En caso quieres bajar los cambios que hiciste en el repositorio, se usa:
+```
+git pull origin <rama>
+```
