@@ -156,3 +156,137 @@ En caso quieres bajar los cambios que hiciste en el repositorio, se usa:
 ```
 git pull origin <rama>
 ```
+
+## CLASE 4 – RAMAS Y GITFLOW  
+
+### ¿Qué son las ramas?
+Al trabajar en equipo no conviene hacer todo directo en la rama main,ya que si algo sale mal se puede afectar todo el proyecto.
+
+Por eso existen las ramas.
+
+Las ramas son caminos alternos dentro del proyecto. Donde se puede trabajar en nuevas funciones o pruebas sin tocar directamente la rama main. Entonces, si algo falla, no se daña la versión principal del proyecto.
+
+### Comando git branch
+Uno de los comandos principales es git branch, que sirve para gestionar ramas.
+
+### Ver ramas existentes
+Con el comando:
+```
+git branch
+```
+se pueden ver todas las ramas que existen y también en cuál se está ahora.
+
+### Crear una nueva rama
+Con:
+```
+git branch <nombre-rama>
+```
+se crea una nueva rama.
+
+### Eliminar una rama
+Con:
+```
+git branch -D <nombre-rama>
+```
+se elimina una rama que ya no se necesita.
+
+
+### git checkout enfocado en ramas
+Aparte de revisar commits antiguos, también sirve para cambiar entre ramas.
+
+### Cambiar de rama
+Con:
+```
+git checkout <rama>
+```
+se cambia de una rama a otra.
+
+### Crear rama y cambiar directamente
+Con:
+```
+git checkout -b <rama>
+```
+se crea la rama y se cambia directamente a ella.
+
+Antes de cambiar de rama no se deben tener archivos modified, staged o untracked 
+porque puede causar conflictos.
+
+### git checkout vs git switch
+Antes todo se hacía con checkout, pero como servía para demasiadas cosas 
+(ramas, commits y archivos), Git creó switch para hacerlo más claro.
+
+### git checkout
+Sirve para:
+* cambiar ramas
+* volver a commits antiguos
+* restaurar archivos
+
+Es más completo, pero también puede generar confusión.
+
+### git switch
+Sirve solamente para moverse entre ramas.
+Es más claro, más moderno y ayuda a evitar errores con mayor facilidad.
+
+### ¿Qué es Gitflow?
+Es una forma de organizar el trabajo con ramas para que el proyecto tenga más orden,
+ cuando varias personas trabajan en conjunto.
+
+Sin Gitflow hay desorden porque todos crean ramas sin estructura clara.
+Pero, ya con Gitflow existe una forma clara de trabajar.
+
+### Ramas principales
+### main
+Es la rama principal y tiene el código estable, el que ya está listo para producción.
+Aquí no se debe trabajar directamente.
+
+### develop
+Es la rama de pre-producción.
+Aquí se desarrolla las nuevas funciones antes de pasar a main.
+Es donde más se trabaja con los cambios.
+
+### Ramas de apoyo
+Hay ramas de apoyo donde se puede trabajar en tareas específicas.
+
+Estas son:
+* feature/*
+* release/*
+* hotfix/*
+
+### Rama feature/*
+Se usa cuando se trabaja en una nueva funcionalidad.
+
+Ejemplos:
+* feature/login
+* feature/add-search-bar
+* feature/new-form-user
+
+Estas ramas nacen de develop y vuelven a develop.
+
+### Rama release/*
+Se usa cuando ya casi se va a lanzar una nueva versión.
+Aquí se realizan pruebas finales y últimos ajustes.
+
+Ejemplo:
+* release/v1.0.0
+
+Nacen de develop y vuelven a main y develop.
+
+### Rama hotfix/*
+Se usa cuando aparece un problema urgente en producción, como errores de login,
+ fallos de pagoc, etc.
+
+Ejemplos:
+* hotfix/login-error
+* hotfix/security-patch
+
+Estas ramas nacen de main porque el problema está en producción y luego vuelven a
+ main y también a develop.
+
+### Aspectos extra a tomar en cuenta
+No se recomienda trabajar directamente en main.
+El flujo normal sería:
+    main ----> develop ----> feature
+y luego seria el regresar en reversa.
+
+Esto ayuda a tener el proyecto limpio, más claro y seguro cuando varias personas
+ trabajan juntas.
