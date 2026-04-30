@@ -289,4 +289,133 @@ El flujo normal sería:
 y luego seria el regresar en reversa.
 
 Esto ayuda a tener el proyecto limpio, más claro y seguro cuando varias personas
- trabajan juntas.
+trabajan juntas.
+
+
+
+## CLASE 4 – MERGE, FETCH, PULL y PUSH
+
+###Git merge
+
+Sirve para fusionar una rama con otra. En pocas palabras, une los cambios de una 
+rama dentro de otra para que todo quede en un solo historial.
+
+Cuando se usa `--no-ff`, Git no hace una fusión “rápida” y en su lugar deja un commit
+ visible de la unión. Eso es útil porque permite ver claramente que esa rama existió
+ y que fue fusionada.
+
+La idea importante es esta: `--no-ff` ayuda a no perder el rastro del trabajo hecho en
+ la rama.
+
+### `Git fetch`
+```
+git fetch
+```
+Sirve para revisar si hubo cambios en el repositorio remoto. No mezcla nada todavía,
+ solo informa y actualiza la referencia local de lo que existe en remoto.
+
+Es como mirar primero qué cambió antes de traerlo al proyecto.
+
+### `Git pull`
+```
+git pull
+```
+trae los cambios del repositorio remoto a la rama local.
+
+La forma más clara de usarlo es:
+
+```
+git pull origin develop
+```
+
+Eso trae lo último que existe en `develop` desde el remoto.
+
+### `Git push`
+```
+git push
+```
+sube los cambios locales al repositorio remoto.
+
+La forma más común es:
+
+```
+git push origin rama
+```
+
+Si es la primera vez que se sube esa rama y el repositorio no es propio, se usa `-u` para
+ dejarla vinculada al remoto:
+
+```
+git push -u origin rama
+```
+
+### Flujo de trabajo sin Pull Requests
+
+El flujo que se explicó fue este:
+
+1. Ir a `develop`
+2. Hacer `git fetch`
+3. Hacer `git pull origin develop`
+4. Ir a la rama de trabajo
+5. Fusionar `develop` en la rama si hace falta
+6. Trabajar en la rama
+7. Subir cambios con `git push origin rama`
+8. Volver a `develop`
+9. Hacer `git fetch`
+10. Hacer `git pull origin develop`
+11. Fusionar la rama con `git merge --no-ff rama`
+12. Resolver conflictos si aparecen
+13. Hacer `git add .`
+14. Hacer `git commit`
+15. Borrar la rama que ya no sirve con `git branch -D rama`
+16. Subir `develop` con `git push origin develop`
+
+### Caso 1: merge limpio
+
+Si nadie tocó lo mismo y no hay conflictos, la fusión sale normal.
+
+En ese caso:
+
+* se hace `git merge --no-ff`
+* Git crea el commit de la fusión
+* se mantiene el historial visible
+* luego se borra la rama ya terminada
+
+### Caso 2: merge con conflictos
+
+Si dos personas modificaron los mismos archivos o las mismas líneas, Git no sabe cuál
+ cambio dejar.
+
+Ahí aparece el conflicto.
+En ese caso se debe abrir el archivo, revisar lo que Git marca con símbolos especiales
+ y decidir manualmente qué se queda:
+
+* solo lo de una rama
+* solo lo de la otra
+* o una mezcla de ambas
+
+Después de corregirlo:
+
+* se guarda el archivo
+* se hace `git add .`
+* se hace `git commit`
+* se termina la fusión
+
+La idea clave es que Git no “adivina” qué cambio es correcto; la persona debe decidirlo.
+
+### Caso 3: trabajar sin desactualizarse
+
+Este fue el consejo más útil de la clase.
+
+Antes de hacer merge en `develop`, conviene traer los cambios nuevos de `develop` a la rama
+ propia para no quedarse muy atrasado. Así se reducen conflictos grandes al final.
+
+La lógica es esta:
+
+* si la rama está muy vieja, se puede romper más al fusionar
+* si se actualiza seguido, el merge final suele ser más fácil
+
+Lo importante, es mejor no dejar la rama demasiado desactualizada.
+
+Y como buena práctica, siempre que una rama ya terminó de usarse, se debe borrar para
+ mantener orden en el proyecto.
