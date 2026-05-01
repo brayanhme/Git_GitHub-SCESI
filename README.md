@@ -97,7 +97,7 @@ git commit
 6.- Escribir todas los commits en ingles, la mayoria lo hace y se recomienda
 
 
-## Clase 3
+## CLASE 3
 
 ### TU CUENTA EN GITHUB
 
@@ -118,7 +118,6 @@ Copia la llave generada, ve a GIthub, en configuraciones y a Keys.
 Crea una nueva llave, dale un nombre y pega la llave que generaste
 antes en la 3ra seccion.
 Finalmente click en ¨crear llave¨
-
 Vuelve a la terminal e ingresa:
 ```
 ssh -T git@github.com 
@@ -293,9 +292,9 @@ trabajan juntas.
 
 
 
-## CLASE 4 – MERGE, FETCH, PULL y PUSH
+## CLASE 5 – MERGE, FETCH, PULL y PUSH
 
-###Git merge
+### Git merge
 
 Sirve para fusionar una rama con otra. En pocas palabras, une los cambios de una 
 rama dentro de otra para que todo quede en un solo historial.
@@ -422,7 +421,7 @@ Y como buena práctica, siempre que una rama ya terminó de usarse, se debe borr
 
 
 
-##CLASE 5: Pull Requests (PRs)
+## CLASE 6: Pull Requests (PRs)
 
 ### Que es un pull request?
 Un Pull Request (PR) es una solicitud para unir los cambios de una rama a otra (normalmente a `main` o `develop`).
@@ -529,4 +528,200 @@ Proceso simple:
 4. Crear un PR hacia el repositorio original.
 
 Y permite que cualquier persona pueda contribuir, incluso sin permisos.
+
+
+
+## CLASE 7 — Trabajo con Pull Requests y flujo profesional
+
+### Imágenes en Markdown
+
+Se puede de 2 formas:
+
+### 1. Sintaxis Markdown
+
+```
+![texto](ruta/imagen.png)
+```
+
+### 2. HTML
+
+```
+<img src="ruta/imagen.png" />
+```
+
+### Diferencias :
+
+* Markdown es más simple
+* HTML es más control (centrar, tamaño, estilos)
+
+### Buenas prácticas:
+
+* Crear una carpeta `images/`
+* Guardar ahí todas las imágenes
+* Usar **rutas relativas**, no absolutas
+
+Error que siempre pasa:
+
+* Usar rutas del sistema (`C:/...`) → no funciona en GitHub
+
+## Archivos vacíos y `.gitkeep`
+
+Git no sube carpetas vacías.
+La solucion: crear un archivo dentro, ejemplo:
+
+```
+.gitkeep
+```
+Esto fuerza a Git a incluir la carpeta.
+
+## Problema del trabajo en equipo sin control
+
+Trabajar sin control implica confiar completamente en el equipo.
+
+Los riesgos:
+
+* Alguien puede hacer merge incorrecto
+* Código mal implementado
+* Posible código malicioso
+* Falta de revisión
+
+Conclusión:
+**Depender solo de la confianza en el otro es peligroso**
+
+
+### Pull Requests es la solución
+
+Un Pull Request permite:
+
+* Ver cambios antes de integrarlos
+* Revisar commit por commit
+* Comentar errores o mejoras
+* Aprobar o rechazar cambios
+
+**Reduce el riesgo y obliga a revisar antes de integrar**
+
+
+## Configuración de reglas (Branch Protection)
+
+Para que los PR funcionen correctamente, se configuran reglas en GitHub:
+
+### Configuración básica:
+
+1. Ir a **Settings ---> Branches**
+2. Crear reglas (Rules)
+3. Aplicar a:
+
+   * `main`
+   * `develop`
+
+### Activar:
+
+* **Require pull request before merging**
+
+### Opciones importantes:
+
+* Número mínimo de aprobaciones
+* Reaprobación si hay nuevos commits
+
+## Flujo con Pull Requests
+
+### 1. Crear y trabajar en una rama
+
+```
+git checkout -b feature/nueva-funcion
+```
+
+### 2. Hacer cambios y commits
+
+```
+git add .
+git commit -m "mensaje claro"
+```
+
+### 3. Subir la rama
+
+```
+git push -u origin rama
+```
+
+### 4. Crear Pull Request en GitHub
+
+* Seleccionar rama origen → destino (`develop`)
+* Agregar título y descripción
+* Explicar qué cambios hiciste
+
+
+## Revisión del Pull Request
+
+El equipo puede:
+
+* Ver cambios por archivo
+* Revisar commit por commit
+* Dejar comentarios específicos en el código
+
+
+## Estados posibles en un PR
+
+### 1. Aprobado
+
+* Cumple requisitos
+* Puede hacerse merge
+
+### 2. Cambios solicitados
+
+* Se bloquea el merge
+* El autor debe corregir
+
+### 3. Comentarios
+
+* Observaciones sin bloquear
+
+### 3.Corrección de cambios
+
+Si el PR tiene observaciones:
+
+1. Hacer cambios en la misma rama
+2. Crear nuevo commit
+3. Hacer push
+
+GitHub actualiza automáticamente el PR.
+
+### Regla importante para hacer merge
+
+Para poder hacer merge:
+
+* Debe cumplirse el número mínimo de aprobaciones
+* Nadie debe estar en “request changes”
+
+Si alguien rechaza:
+	No se puede hacer merge hasta corregir
+
+## Merge final
+
+Cuando todo está aprobado:
+
+* Se hace merge desde GitHub
+* Se integran los cambios a `develop`
+
+Luego:
+
+```
+git checkout develop
+git pull origin develop
+git branch -d rama
+```
+
+## Buenas prácticas
+
+* Usar nombres claros en commits
+* Escribir descripciones en PR
+* Revisar antes de aprobar
+* No hacer merge directo en ramas principales
+* Actualizar tu rama antes de crear PR
+
+## Evaluación y entregas
+
+* Trabajo individual: revisión por commits hasta hora límite
+* Trabajo grupal: mismo criterio
+* No se consideran commits después de la hora establecida
 
