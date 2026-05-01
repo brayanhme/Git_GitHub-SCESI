@@ -531,191 +531,152 @@ Y permite que cualquier persona pueda contribuir, incluso sin permisos.
 
 
 
-## CLASE 7 — Trabajo con Pull Requests y flujo profesional
 
-### Imágenes en Markdown
 
-Se puede de 2 formas:
 
-### 1. Sintaxis Markdown
+## CLASE 7 – Clase Final de Git
 
-```
-![texto](ruta/imagen.png)
-```
-
-### 2. HTML
+### 1. git merge 
 
 ```
-<img src="ruta/imagen.png" />
-```
+git merge nombre_rama
+````
 
-### Diferencias :
+Este comando trae los cambios de otra rama hacia la rama en la que estás trabajando.
 
-* Markdown es más simple
-* HTML es más control (centrar, tamaño, estilos)
-
-### Buenas prácticas:
-
-* Crear una carpeta `images/`
-* Guardar ahí todas las imágenes
-* Usar **rutas relativas**, no absolutas
-
-Error que siempre pasa:
-
-* Usar rutas del sistema (`C:/...`) → no funciona en GitHub
-
-## Archivos vacíos y `.gitkeep`
-
-Git no sube carpetas vacías.
-La solucion: crear un archivo dentro, ejemplo:
+2. Ejemplo:
 
 ```
-.gitkeep
-```
-Esto fuerza a Git a incluir la carpeta.
-
-## Problema del trabajo en equipo sin control
-
-Trabajar sin control implica confiar completamente en el equipo.
-
-Los riesgos:
-
-* Alguien puede hacer merge incorrecto
-* Código mal implementado
-* Posible código malicioso
-* Falta de revisión
-
-Conclusión:
-**Depender solo de la confianza en el otro es peligroso**
-
-
-### Pull Requests es la solución
-
-Un Pull Request permite:
-
-* Ver cambios antes de integrarlos
-* Revisar commit por commit
-* Comentar errores o mejoras
-* Aprobar o rechazar cambios
-
-**Reduce el riesgo y obliga a revisar antes de integrar**
-
-
-## Configuración de reglas (Branch Protection)
-
-Para que los PR funcionen correctamente, se configuran reglas en GitHub:
-
-### Configuración básica:
-
-1. Ir a **Settings ---> Branches**
-2. Crear reglas (Rules)
-3. Aplicar a:
-
-   * `main`
-   * `develop`
-
-### Activar:
-
-* **Require pull request before merging**
-
-### Opciones importantes:
-
-* Número mínimo de aprobaciones
-* Reaprobación si hay nuevos commits
-
-## Flujo con Pull Requests
-
-### 1. Crear y trabajar en una rama
-
-```
-git checkout -b feature/nueva-funcion
+git checkout feature
+git merge develop
 ```
 
-### 2. Hacer cambios y commits
+Esto significa que estás trayendo los cambios de `develop` a `feature`.
+
+
+### 3. Error común en reglas 
+
+Un error que puede pasar fácilmente es escribir el nombre de la rama con comillas.
+
+Incorrecto:
 
 ```
-git add .
-git commit -m "mensaje claro"
+"develop"
 ```
 
-### 3. Subir la rama
+Correcto:
 
 ```
-git push -u origin rama
+develop
 ```
 
-### 4. Crear Pull Request en GitHub
+### 4. Pull Requests (PR)
 
-* Seleccionar rama origen → destino (`develop`)
-* Agregar título y descripción
-* Explicar qué cambios hiciste
+* Aunque seas administrador, igual puedes necesitar aprobación.
+* Pueden existir varios PR al mismo tiempo.
 
-
-## Revisión del Pull Request
-
-El equipo puede:
-
-* Ver cambios por archivo
-* Revisar commit por commit
-* Dejar comentarios específicos en el código
+Es normal en trabajo en equipo, pero puede generar problemas si no se maneja bien.
 
 
-## Estados posibles en un PR
+### 5. Conflictos entre PR
 
-### 1. Aprobado
+Un conflicto aparece cuando dos personas modifican el mismo archivo o la misma parte del código.
 
-* Cumple requisitos
-* Puede hacerse merge
+### Qué sucede:
 
-### 2. Cambios solicitados
+* El primer PR se puede mergear sin problema.
+* El segundo PR puede fallar por conflicto.
 
-* Se bloquea el merge
-* El autor debe corregir
 
-### 3. Comentarios
-
-* Observaciones sin bloquear
-
-### 3.Corrección de cambios
-
-Si el PR tiene observaciones:
-
-1. Hacer cambios en la misma rama
-2. Crear nuevo commit
-3. Hacer push
-
-GitHub actualiza automáticamente el PR.
-
-### Regla importante para hacer merge
-
-Para poder hacer merge:
-
-* Debe cumplirse el número mínimo de aprobaciones
-* Nadie debe estar en “request changes”
-
-Si alguien rechaza:
-	No se puede hacer merge hasta corregir
-
-## Merge final
-
-Cuando todo está aprobado:
-
-* Se hace merge desde GitHub
-* Se integran los cambios a `develop`
-
-Luego:
+### 6. Cómo solucionar conflictos
 
 ```
 git checkout develop
 git pull origin develop
-git branch -d rama
+git checkout tu_rama
+git merge develop
 ```
 
-## Buenas prácticas
+Después de esto:
 
-* Usar nombres claros en commits
-* Escribir descripciones en PR
-* Revisar antes de aprobar
-* No hacer merge directo en ramas principales
-* Actualizar tu rama antes de crear PR
+1. Resuelves los conflictos
+2. Haces commit
+3. Haces push nuevamente
+
+### 7. git stash
+
+Sirve para guardar cambios temporales sin hacer commit.
+
+### Guardar cambios
+
+```
+git stash -m "mensaje"
+```
+
+### Ver cambios guardados
+
+```
+git stash list
+```
+
+### Recuperar cambios
+
+```
+git stash pop
+```
+Se puede entender como una lista donde guardas cambios momentáneamente para no perderlos.
+
+
+### 8. git diff
+
+Permite ver diferencias en el código.
+
+### Casos más comunes
+
+Cambios sin agregar:
+
+```bash
+git diff
+```
+
+Cambios en stage:
+
+```bash
+git diff --staged
+```
+
+Diferencias entre ramas:
+
+```
+git diff rama1 rama2
+```
+
+Archivo específico:
+
+```bash
+git diff archivo
+```
+
+
+## 9. Buenas prácticas
+
+Después de hacer merge de un PR, es recomendable eliminar la rama.
+
+Esto ayuda a:
+
+* Mantener el repositorio ordenado
+* Evitar ramas innecesarias
+
+## 10. Resolución de conflictos en VS Code
+
+Cuando hay conflictos, VS Code te da opciones:
+
+* Aceptar tu versión
+* Aceptar la versión entrante
+* Aceptar ambas
+* Resolver manualmente
+
+Lo mejor es revisar primero qué cambió usando `git diff` y luego decidir.
+
+
 
