@@ -351,7 +351,7 @@ git push -u origin rama
 
 ### Flujo de trabajo sin Pull Requests
 
-El flujo que se explicó fue este:
+El flujo que se explicó es este:
 
 1. Ir a `develop`
 2. Hacer `git fetch`
@@ -419,3 +419,114 @@ Lo importante, es mejor no dejar la rama demasiado desactualizada.
 
 Y como buena práctica, siempre que una rama ya terminó de usarse, se debe borrar para
  mantener orden en el proyecto.
+
+
+
+##CLASE 5: Pull Requests (PRs)
+
+### Que es un pull request?
+Un Pull Request (PR) es una solicitud para unir los cambios de una rama a otra (normalmente a `main` o `develop`).
+No hace el merge directamente, sino que permite revisar los cambios antes de aceptarlos.
+
+En si, el PR es una propuesta de cambio que el equipo revisa antes de integrarla.
+
+
+### Para qué sirve?
+
+* Permite ver exactamente qué se va a cambiar.
+* Da espacio para revisar el código antes de unirlo.
+* Facilita comentarios y correcciones.
+* Evita que alguien haga cambios directos sin control.
+
+## Flujo de trabajo con PRs
+
+Actualizar la rama principal
+```
+git checkout develop
+git fetch
+git pull origin develop
+```
+Crear o cambiar a tu rama
+```
+git checkout rama       
+```
+
+Actualizar tu rama con cambios recientes
+```
+git merge develop
+```
+Trabajar normalmente (editar, commit, etc.)
+
+Subir cambios
+```
+git push origin rama     # usar -u la primera vez
+```
+Antes del PR, verificar que estás actualizado
+```
+git checkout develop
+git fetch
+git checkout rama
+git merge develop
+```
+Resolver conflictos si hay
+```
+git add .
+git commit
+git push origin rama
+```
+
+Algo a tomar en cuenta:
+Si hay conflictos, Git marca los archivos y debes corregirlos manualmente antes de continuar.
+
+### Creación del PR
+
+Después de hacer `push`:
+
+1. Ir a GitHub.
+2. Seleccionar “Compare & pull request”.
+3. Escribir un título claro.
+4. Agregar una descripción de los cambios.
+5. Crear el PR.
+
+El resultado es que otros miembros del equipo pueden revisar el cambio antes de hacer el merge.
+
+### ¿Por qué usar PRs?
+
+Sin PRs, cualquier persona puede hacer cambios directamente en el repositorio, lo cual genera riesgos:
+
+* Se pueden introducir errores sin revisión.
+* No hay control sobre qué código se integra.
+* Puede haber problemas de seguridad o malas prácticas.
+
+Con PRs:
+
+* Se revisa el código antes de aceptarlo.
+* Se discuten los cambios.
+* Se entiende mejor qué se está agregando.
+* Se reduce la probabilidad de errores.
+
+### Protección del repositorio
+
+Aunque se use PRs, si no configuras restricciones, los miembros del equipo aún pueden hacer merge directo.
+
+Para evitar esto, se configura en GitHub:
+
+* Obligar a usar PRs para hacer merge.
+* Pedir aprobación antes de aceptar cambios.
+* Bloquear push directo a ramas principales.
+
+Asi asegurar que todo cambio pase por revisión.
+
+### Colaboración sin ser colaborador
+
+No es necesario tener acceso directo al repositorio para aportar.
+
+Proceso simple:
+
+1. Hacer un fork del repositorio.
+2. Trabajar en tu copia.
+3. Subir cambios a tu fork.
+4. Crear un PR hacia el repositorio original.
+
+Y permite que cualquier persona pueda contribuir, incluso sin permisos.
+
