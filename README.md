@@ -1,9 +1,9 @@
 			README.md
-#Trabajo Individual
+# Trabajo Individual
 
 Brayan Herland Mancilla Escalera
 
-##Clase 1
+## CLASE 1
 ### Que es GIT ?
 
 Es un controlador de versiones, util para guardar versiones a medida que 
@@ -39,7 +39,7 @@ git status
 git commit -m ¨Primer commit¨
 ```
 
-## Clase 2
+## CLASE 2
 
 ### ESTADOS DE GIT
 
@@ -718,10 +718,4 @@ git branch -d rama
 * Revisar antes de aprobar
 * No hacer merge directo en ramas principales
 * Actualizar tu rama antes de crear PR
-
-## Evaluación y entregas
-
-* Trabajo individual: revisión por commits hasta hora límite
-* Trabajo grupal: mismo criterio
-* No se consideran commits después de la hora establecida
 
